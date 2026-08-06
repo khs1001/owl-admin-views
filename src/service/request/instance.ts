@@ -47,7 +47,7 @@ export default class CustomAxiosInstance {
                     const backend = adapted?.data
 
                     // token失效
-                    if (backend?.code == 401 && !inLoginPage()) {
+                    if ((backend?.status == 401 || backend?.code == 401) && !inLoginPage()) {
                         Token().clear()
                         goToLoginPage()
                     }
