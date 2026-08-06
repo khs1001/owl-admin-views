@@ -39,7 +39,7 @@ export default class CustomAxiosInstance {
         this.instance.interceptors.response.use(
             async response => {
                 const {status} = response
-                if (status === 200 || status < 300 || status === 304) {
+                if (status === 200 || status < 300 || status === 304 || status === 401) {
                     // 先处理附件下载/Blob 的场景
                     const adapted = await attachmentAdpator(response, () => '')
 
@@ -47,7 +47,7 @@ export default class CustomAxiosInstance {
                     const backend = adapted?.data
 
                     // token失效
-                    if ((backend?.status == 401 || backend?.code == 401) && !inLoginPage()) {
+                    if ((status==401 || backend?.status == 401 || backend?.code == 401) && !inLoginPage()) {
                         Token().clear()
                         goToLoginPage()
                     }
