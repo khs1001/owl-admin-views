@@ -10,7 +10,15 @@
 <body>
 <div id="root"></div>
 </body>
-<script>window.$adminApiPrefix = '/admin-api'</script>
+<script>
+  // 默认 API 前缀：当前一级路径 + "-api"；根目录则为 "api"
+  // 例：/admin/index.html -> /admin-api；/ -> /api
+  (function () {
+    var path = window.location.pathname
+    var first = (path.split('/').filter(Boolean)[0]) || '';
+    window.$adminApiPrefix = '/' + (first ? first + '-api' : 'api');
+  })();
+</script>
 <script src="/scripts/loading.js"></script>
 <script type="module" src="/src/main.tsx"></script>
 </html>
